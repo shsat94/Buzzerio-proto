@@ -1,0 +1,16 @@
+{
+  "name": "buzzer-backend",
+  "version": "1.0.0",
+  "description": "This is the backend for the Buzzer Web app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Velociraptor",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "socket.io": "^4.7.5",
+    "socket.js": "^0.1.4"
+  }
+}
