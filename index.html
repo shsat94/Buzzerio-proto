@@ -1,14 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script defer src="http://localhost:8000/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="style.css">
     <script defer src="client.js"></script>
     <title>Document</title>
 </head>
+
 <body>
-    <button id="create">Create Room</button>
-    <button id="join">join Room</button>
+    <div class="container">
+        <div class="welcome">
+            <h1>Buzzeringo-A Room based buzzer</h1>
+        </div>
+        <div class="button">
+            <div class="button-shell">
+
+                <button class="btn" id="create">Create Room</button>
+            </div>
+            <div class="button-shell">
+
+                <button class="btn" id="join">Join Room</button>
+            </div>
+        </div>
+    </div>
+    <div class="createroom">
+
+        <form class="room">
+
+            <label class="label" for="hostname">Enter the Hostname</label>
+            <input type="text" class="input" name="hostname" id="hostname">
+            <div class="btn-fix">
+
+                <button type="submit" id="submit-create-room" class="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <div class="joinroom">
+
+        <form class="room">
+            <label class="label" for="membername">Enter Your Name</label>
+            <input type="text" class="input" name="membername" id="membername">
+            <label class="label" for="roomid">Enter the roomId</label>
+            <input type="text" class="input" name="roomId" id="roomid">
+            <div class="btn-fix">
+
+                <button type="submit" id="submit-join-room" class="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="room-creator-dashboard">
+        <h1 class="host">HOST DASHBOARD</h1>
+        <div class="dashboard">
+            <div class="leaderboard">
+                <table class="player" style="width: 100%;">
+                    <tr class="head">
+                        <th style="width: 30%;">Name</th>
+                        <th style="width: 40%;">Time(in sec)</th>
+                        <th>Position</th>
+                    </tr>
+                    <tr class="center">
+                        <td style="width: 30%;">Satyarth</td>
+                        <td style="width: 40%;">+1.4s</td>
+                        <td>1</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="memberlist">
+                <p style="color: #9ef01a;">Name</p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="room-member-dashboard">
+        <div class="flex-container">
+            <!-- Buzzer Section -->
+            <div class="buzzer-container">
+                <div class="buzzer-button">
+                    <div class="buzzer-button-inner"></div>
+                    <div class="buzzer-text">Buzz</div>
+                </div>
+            </div>
+    
+            <!-- Leaderboard Section -->
+            <div class="join-leaderboard">
+                <h2>Leaderboard</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Time (in sec)</th>
+                            <th>Position</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Satyarth</td>
+                            <td>+1.4s</td>
+                            <td>1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
 </body>
+
 </html>
