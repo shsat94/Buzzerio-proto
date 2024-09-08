@@ -31,7 +31,7 @@
         <form class="room">
 
             <label class="label" for="hostname">Enter the Hostname</label>
-            <input type="text" class="input" name="hostname" id="hostname">
+            <input required type="text" class="input" name="hostname" id="hostname">
             <div class="btn-fix">
 
                 <button type="submit" id="submit-create-room" class="submit">Submit</button>
@@ -42,9 +42,9 @@
 
         <form class="room">
             <label class="label" for="membername">Enter Your Name</label>
-            <input type="text" class="input" name="membername" id="membername">
+            <input required type="text" class="input" name="membername" value='' id="membername">
             <label class="label" for="roomid">Enter the roomId</label>
-            <input type="text" class="input" name="roomId" id="roomid">
+            <input required type="text" value='' class="input" name="roomId" id="roomid">
             <div class="btn-fix">
 
                 <button  type="submit" id="submit-join-room" class="submit">Submit</button>

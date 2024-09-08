@@ -18,7 +18,7 @@ const joinleaderboard = document.querySelector('.join-leaderboard-body');
 const buzzer = document.querySelector('.buzzer-button');
 const memberlist = document.querySelector('.memberlist');
 
-const reset=document.querySelector('#reset');
+const reset = document.querySelector('#reset');
 //creation and joining submit buttons
 const createRoom = document.querySelector('#submit-create-room');
 const joinRoom = document.querySelector('#submit-join-room');
@@ -39,11 +39,16 @@ let roomId = '';
 let membername = '';
 let position = 0;
 let firstInstance = '';
+let joinsuccess = false;
 
 
 //functions
 const RoomCreation = (e) => {
     e.preventDefault();
+    if (Hname.value === '') {
+        alert('Fill all the details');
+        return;
+    }
     const hostname = Hname.value;
     createRoomForm.classList.add("none");
     creatorDashboard.classList.remove('none');
@@ -53,10 +58,14 @@ const RoomCreation = (e) => {
 
 const Roomjoining = (e) => {
     e.preventDefault();
+
     roomId = enteredroomID.value;
     membername = member.value;
-    joinRoomForm.classList.add('none');
-    memberDashboard.classList.remove('none');
+    if (roomId === '' || membername === '') {
+        alert('Enter all the fields');
+        return;
+    }
+    joinsuccess = true;
     socket.emit('join-room', roomId, membername);
 }
 
@@ -68,16 +77,22 @@ const formatTimestamp = (date) => {
 }
 
 
-const removemembername=(name)=>{
-    const totalmembers=memberlist.getElementsByTagName('p');
-    for(let i =0;i<totalmembers.length;i++){
-        if(totalmembers[i].innerText===name){
+const removemembername = (name) => {
+    const totalmembers = memberlist.getElementsByTagName('p');
+    for (let i = 0; i < totalmembers.length; i++) {
+        if (totalmembers[i].innerText === name) {
             memberlist.removeChild(totalmembers[i]);
             break;
         }
     }
 }
 
+const roomJoinChangeWindow = () => {
+    if (joinsuccess) {
+        joinRoomForm.classList.add('none');
+        memberDashboard.classList.remove('none');
+    }
+}
 
 //event listners
 
@@ -91,6 +106,7 @@ join.addEventListener('click', () => {
     container.classList.add("none");
     joinRoomForm.classList.remove("none");
     joinRoom.addEventListener('click', Roomjoining);
+    roomJoinChangeWindow();
 
 });
 
@@ -115,6 +131,7 @@ socket.on('room-details', (membername) => {
     mem.innerHTML = `${membername}`;
     mem.classList.add('members');
     memberlist.append(mem);
+    roomJoinChangeWindow();
 });
 
 
@@ -144,24 +161,36 @@ socket.on('press-info', (memname, time) => {
 
 
 socket.on('creator-room-info', (hostnm, roomiden) => {
-    roomId=roomiden;
+    roomId = roomiden;
     leaderboardhostN.innerText = `HOSTNAME - ${hostnm}`;
     leaderboardroomI.innerText = `ROOMID   - ${roomiden}`;
 })
 
 
-reset.addEventListener('click',()=>{
-    socket.emit('reset',roomId);
+reset.addEventListener('click', () => {
+    socket.emit('reset', roomId);
 });
 
-socket.on('reset-leaderboard',()=>{
-    buzzer.disabled=false;
-    leaderboard.innerHTML=' ';
-    joinleaderboard.innerHTML=' ';
-    position=0;
+socket.on('reset-leaderboard', () => {
+    buzzer.disabled = false;
+    leaderboard.innerHTML = ' ';
+    joinleaderboard.innerHTML = ' ';
+    position = 0;
 
 });
 
-socket.on('disconnected',(name)=>{
+socket.on('disconnected', (name) => {
     removemembername(name);
-})
+});
+
+socket.on('server-error', () => {
+    window.location.href = 'error.html';
+});
+
+
+socket.on('invalid-room', () => {
+    alert("Enter valid ROOM_ID");
+    joinsuccess = false;
+});
+
+
