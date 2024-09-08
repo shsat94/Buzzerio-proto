@@ -47,7 +47,7 @@
             <input type="text" class="input" name="roomId" id="roomid">
             <div class="btn-fix">
 
-                <button type="submit" id="submit-join-room" class="submit">Submit</button>
+                <button  type="submit" id="submit-join-room" class="submit">Submit</button>
             </div>
         </form>
     </div>
@@ -55,26 +55,32 @@
 
     <div class="room-creator-dashboard">
         <h1 class="host">HOST DASHBOARD</h1>
+        <p style="color: #9ef01a;font-size: 1.5rem;" id="hostN"></p>
+        <p style="color: #9ef01a;font-size: 1.5rem;margin-bottom: 1rem;" id="roomI"></p>
         <div class="dashboard">
             <div class="leaderboard">
                 <table class="player" style="width: 100%;">
-                    <tr class="head">
-                        <th style="width: 30%;">Name</th>
-                        <th style="width: 40%;">Time(in sec)</th>
-                        <th>Position</th>
-                    </tr>
-                    <tr class="center">
-                        <td style="width: 30%;">Satyarth</td>
-                        <td style="width: 40%;">+1.4s</td>
-                        <td>1</td>
-                    </tr>
+                    <thead>
+                        <tr class="head">
+                            <th style="width: 30%;">Name</th>
+                            <th style="width: 40%;">Time(in millisec)</th>
+                            <th>Position</th>
+                        </tr>
+
+                    </thead>
+                    <tbody class="player-data">
+
+                    </tbody>
                 </table>
             </div>
 
             <div class="memberlist">
                 <p style="color: #9ef01a;">Name</p>
             </div>
+
+
         </div>
+        <button   id="reset" class="reset">Reset Leaderboard</button>
     </div>
 
 
@@ -82,10 +88,10 @@
         <div class="flex-container">
             <!-- Buzzer Section -->
             <div class="buzzer-container">
-                <div class="buzzer-button">
+                <button class="buzzer-button">
                     <div class="buzzer-button-inner"></div>
                     <div class="buzzer-text">Buzz</div>
-                </div>
+                </button>
             </div>
     
             <!-- Leaderboard Section -->
@@ -99,12 +105,8 @@
                             <th>Position</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Satyarth</td>
-                            <td>+1.4s</td>
-                            <td>1</td>
-                        </tr>
+                    <tbody class="join-leaderboard-body">
+                        
                     </tbody>
                 </table>
             </div>

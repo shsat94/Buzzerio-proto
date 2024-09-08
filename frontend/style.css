@@ -134,6 +134,7 @@ h1 {
 .host {
     font-size: 2rem;
     color: #00ffa2;
+    margin: 1.5rem;
 }
 
 table {
@@ -152,6 +153,25 @@ tr {
     width: 80%;
     overflow-y: auto;
 }
+
+.reset {
+    width: 7rem;
+    height: 3rem;
+    margin-top: 2rem;
+    border-radius: 5rem;
+    background-color: #0e396d;
+    border: 1px solid #9ef01a;
+    cursor: pointer;
+    color: #6fffe9;
+    transition: 0.5s ease-in-out;
+
+
+}
+.reset:hover{
+    background-color: #41638e;
+    border: 1px solid #f01a5a;
+}
+
 
 
 
@@ -206,6 +226,7 @@ tr {
     align-items: center;
     position: relative;
     transition: all 0.3s ease-in-out;
+    cursor: pointer;
 }
 
 .buzzer-button:before {
@@ -250,10 +271,12 @@ tr {
         transform: scale(0.95);
         opacity: 1;
     }
+
     50% {
         transform: scale(1.05);
         opacity: 0.6;
     }
+
     100% {
         transform: scale(0.95);
         opacity: 1;
@@ -265,10 +288,12 @@ tr {
         transform: scale(0.95);
         opacity: 1;
     }
+
     50% {
         transform: scale(1.05);
         opacity: 0.6;
     }
+
     100% {
         transform: scale(0.95);
         opacity: 1;
@@ -300,7 +325,8 @@ tr {
     border-collapse: collapse;
 }
 
-.join-leaderboard th, .join-leaderboard td {
+.join-leaderboard th,
+.join-leaderboard td {
     padding: 10px;
     border-bottom: 1px solid #0f0;
 }

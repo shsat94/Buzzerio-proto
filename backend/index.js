@@ -1,7 +1,7 @@
 const io = require('socket.io')(8000, { cors: { origin: "*" } });
 let rooms = [];
 
-
+let namemap={};
 
 
 const generateRoomId = () => {
@@ -17,6 +17,7 @@ const generateRoomId = () => {
 }
 
 io.on('connection', socket => {
+    namemap[socket.id]={};
     const roomId= generateRoomId();
     socket.on('create-room', (hostName) => {
         if (rooms.length < 1) {
@@ -28,7 +29,8 @@ io.on('connection', socket => {
                 members: []
             }
             rooms.push(roomdetails);
-            console.log(rooms);
+            namemap[socket.id]={roomId,name:hostName};
+            io.to(roomId).emit('creator-room-info',hostName,roomId);
             
             return;
         }
@@ -44,8 +46,9 @@ io.on('connection', socket => {
                     host: hostName,
                     members: []
                 }
+                namemap[socket.id]={roomId,name:hostName};
                 rooms.push(roomdetails);
-                console.log(rooms);
+                io.to(roomId).emit('creator-room-info',hostName,roomId);
                 
                 break;
             }
@@ -58,13 +61,30 @@ io.on('connection', socket => {
         for (i = 0; i < rooms.length; i++) {
             if (roomId === rooms[i].roomId) {
                 socket.join(roomId);
+                namemap[socket.id]={roomId,name};
                 rooms[i].members.push(name);
-                console.log(rooms);
-                console.log(`${name} joined RoomID ${roomId}`);
                 io.to(roomId).emit('room-details',name);
                 break;
             }
         }
     });
+
+
+    socket.on('clicked-time',(id,name,clickedtime)=>{
+        io.to(id).emit('press-info',name,clickedtime);
+
+    });
+
+    socket.on('reset',(roomid)=>{
+        io.to(roomid).emit('reset-leaderboard');
+    });
+
+
+    socket.on('disconnect',()=>{
+        const room=namemap[socket.id].roomId;
+        const name=namemap[socket.id].name;
+        delete namemap[socket.id];
+        io.to(room).emit('disconnected',name);
+    })
 
 });
