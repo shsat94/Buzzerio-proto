@@ -183,9 +183,6 @@ socket.on('disconnected', (name) => {
     removemembername(name);
 });
 
-socket.on('server-error', () => {
-    window.location.href = 'error.html';
-});
 
 
 socket.on('invalid-room', () => {

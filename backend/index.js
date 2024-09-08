@@ -101,8 +101,4 @@ try {
     });
 
 } catch (error) {
-    io.on('connection', () => {
-
-        io.emit('server-error');
-    })
 }
