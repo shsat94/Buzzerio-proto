@@ -40,6 +40,7 @@ let membername = '';
 let position = 0;
 let firstInstance = '';
 let joinsuccess = false;
+const audio=new Audio('./buzzer.m4a');
 
 
 //functions
@@ -113,6 +114,10 @@ join.addEventListener('click', () => {
 
 
 buzzer.addEventListener('click', () => {
+    audio.play();
+    setTimeout(() => {
+        audio.pause();
+      }, 100);
     buzzer.disabled = true;
     const pressedtime = new Date();
     const clickedtime = formatTimestamp(pressedtime);
