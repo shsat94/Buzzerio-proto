@@ -9,6 +9,7 @@ const container = document.querySelector('.container');
 const creatorDashboard = document.querySelector(".room-creator-dashboard");
 const memberDashboard = document.querySelector(".room-member-dashboard");
 const leaderboard = document.querySelector('.player-data');
+const joinName=document.querySelector('#join-name');
 
 const leaderboardhostN = document.querySelector('#hostN');
 const leaderboardroomI = document.querySelector('#roomI');
@@ -67,6 +68,7 @@ const Roomjoining = (e) => {
         return;
     }
     joinsuccess = true;
+    joinName.innerText=`Name: ${membername}`;
     socket.emit('join-room', roomId, membername);
 }
 
@@ -117,13 +119,13 @@ buzzer.addEventListener('click', () => {
     audio.play();
     setTimeout(() => {
         audio.pause();
-      }, 100);
+      }, 200);
     buzzer.disabled = true;
     const pressedtime = new Date();
     const clickedtime = formatTimestamp(pressedtime);
     socket.emit('clicked-time', roomId, membername, clickedtime);
 
-})
+});
 
 
 socket.on('room-present', () => {
