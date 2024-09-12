@@ -9,7 +9,7 @@ const container = document.querySelector('.container');
 const creatorDashboard = document.querySelector(".room-creator-dashboard");
 const memberDashboard = document.querySelector(".room-member-dashboard");
 const leaderboard = document.querySelector('.player-data');
-const joinName=document.querySelector('#join-name');
+const joinName = document.querySelector('#join-name');
 
 const leaderboardhostN = document.querySelector('#hostN');
 const leaderboardroomI = document.querySelector('#roomI');
@@ -41,7 +41,8 @@ let membername = '';
 let position = 0;
 let firstInstance = '';
 let joinsuccess = false;
-const audio=new Audio('./buzzer.m4a');
+const audio = new Audio('./buzzer.m4a');
+let firstName = '';
 
 
 //functions
@@ -68,7 +69,7 @@ const Roomjoining = (e) => {
         return;
     }
     joinsuccess = true;
-    joinName.innerText=`Name: ${membername}`;
+    joinName.innerText = `Name: ${membername}`;
     socket.emit('join-room', roomId, membername);
 }
 
@@ -119,7 +120,7 @@ buzzer.addEventListener('click', () => {
     audio.play();
     setTimeout(() => {
         audio.pause();
-      }, 200);
+    }, 200);
     buzzer.disabled = true;
     const pressedtime = new Date();
     const clickedtime = formatTimestamp(pressedtime);
@@ -146,7 +147,18 @@ socket.on('press-info', (memname, time) => {
     position = position + 1;
     if (position === 1) {
         firstInstance = time;
+        firstName = memname;
+        setTimeout(() => {
+            const synth = window.speechSynthesis;
+            let text = `${memname} got first position`;
+            const utterThis = new SpeechSynthesisUtterance(text);
+            synth.speak(utterThis);
+        }, 300);
+        
     }
+    //first member name speaking
+
+
     const extratime = time - firstInstance;
 
     const led = document.createElement('tr');
