@@ -26,7 +26,7 @@ try {
         namemap[socket.id] = {};
         const roomId = generateRoomId();
         socket.on('create-room', (hostName) => {
-            if (rooms.length < 1) {
+            if (rooms.length ===0) {
 
                 socket.join(roomId);
                 let roomdetails = {
@@ -89,13 +89,36 @@ try {
             io.to(roomid).emit('reset-leaderboard');
         });
 
+        socket.on('closeRoom',(roomid)=>{
+            for (i = 0; i < rooms.length; i++) {
+                if (roomid === rooms[i].roomId) {
+                    rooms.splice(i, i+1);
+                    io.to(roomid).emit('resetwindow');
+                    break;
+                }
+            }
+        })
 
-        socket.on('disconnect', () => {
+
+        socket.on('close-mem-room', () => {
             const room = namemap[socket.id].roomId;
             const name = namemap[socket.id].name;
             delete namemap[socket.id];
-            io.to(room).emit('disconnected', name);
-        })
+            for (i = 0; i < rooms.length; i++) {
+                if (rooms[i].roomId === room) {
+                    for(j=0;j<rooms[i].members.length;j++){
+                        if(name===rooms[i].members[j]){
+                            rooms[i].members.splice(j,j+1);
+                            io.to(room).emit('disconnected', name);
+                            break;
+                        }
+                    }
+                    
+                    
+                }
+            }
+            
+        });
 
 
     });

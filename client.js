@@ -1,4 +1,5 @@
 const socket = io("https://buzzerio.onrender.com");
+// const socket = io("http://localhost:8000");
 
 
 const create = document.querySelector('#create');
@@ -23,6 +24,9 @@ const reset = document.querySelector('#reset');
 //creation and joining submit buttons
 const createRoom = document.querySelector('#submit-create-room');
 const joinRoom = document.querySelector('#submit-join-room');
+
+const closeRoom = document.querySelector('#close');
+const leaveRoom = document.querySelector('#leave');
 
 const Hname = document.querySelector('#hostname');
 
@@ -129,6 +133,28 @@ buzzer.addEventListener('click', () => {
 });
 
 
+reset.addEventListener('click', () => {
+    socket.emit('reset', roomId);
+});
+
+
+closeRoom.addEventListener('click', (e) => {
+    e.preventDefault();
+    socket.emit('closeRoom', roomId);
+});
+
+leaveRoom.addEventListener('click', (e) => {
+    e.preventDefault();
+    const resp=confirm("Do you want to leave");
+    if(resp==true){
+        window.location.reload();
+        socket.emit('close-mem-room');
+    }
+
+});
+
+//sockets
+
 socket.on('room-present', () => {
     alert("room is already present");
 });
@@ -154,7 +180,7 @@ socket.on('press-info', (memname, time) => {
             const utterThis = new SpeechSynthesisUtterance(text);
             synth.speak(utterThis);
         }, 300);
-        
+
     }
     //first member name speaking
 
@@ -176,19 +202,17 @@ socket.on('press-info', (memname, time) => {
 
     joinleaderboard.append(joinled);
 
-})
+});
 
 
 socket.on('creator-room-info', (hostnm, roomiden) => {
     roomId = roomiden;
     leaderboardhostN.innerText = `HOSTNAME - ${hostnm}`;
     leaderboardroomI.innerText = `ROOMID   - ${roomiden}`;
-})
-
-
-reset.addEventListener('click', () => {
-    socket.emit('reset', roomId);
 });
+
+
+
 
 socket.on('reset-leaderboard', () => {
     buzzer.disabled = false;
@@ -209,4 +233,9 @@ socket.on('invalid-room', () => {
     joinsuccess = false;
 });
 
+
+socket.on('resetwindow', () => {
+    alert("This room is closed");
+    location.reload();
+})
 

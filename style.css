@@ -172,6 +172,12 @@ tr {
     border: 1px solid #f01a5a;
 }
 
+.btns{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
 
 
 
